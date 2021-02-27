@@ -137,6 +137,7 @@ function sendTransaction(isAdding) {
     .catch((err) => {
       // fetch failed, so save in indexed db
       console.log("transaction trying to execute =", transaction);
+      //need to find a way to pass _id into this bad boy
       saveRecord(transaction);
 
       // clear form
