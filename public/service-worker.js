@@ -48,24 +48,24 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  if (
-    event.request.method !== "GET" ||
-    !event.request.url.startsWith(self.location.origin)
-  ) {
-    console.log("just in case we're hitting this but I don't think we are = ", event.request)
-    event.respondWith(fetch(event.request));
-    return;
-  }
+  // if (
+  //   event.request.method !== "GET" ||
+  //   !event.request.url.startsWith(self.location.origin)
+  // ) {
+  //   console.log("just in case we're hitting this but I don't think we are = ", event.request)
+  //   event.respondWith(fetch(event.request));
+  //   return;
+  // }
 
   // handle runtime GET requests for data from /api routes
   if (event.request.url.includes("/api/transaction")) {
     // make network request and fallback to cache if network request fails (offline)
     event.respondWith(
       caches.open(RUNTIME_CACHE).then(cache => {
-        console.log("event.request in fetch request transaction api = ", event.request)
+        
         return fetch(event.request)
           .then((response) => {
-            console.log("response right before cache.put in service-worker fetch api = ", response)
+            
             cache.put(event.request, response.clone());
             return response;
           })
@@ -85,6 +85,7 @@ self.addEventListener("fetch", (event) => {
       // request is not in cache. make network request and cache the response
       return caches.open(RUNTIME_CACHE).then((cache) => {
         return fetch(event.request).then((response) => {
+          
           return cache.put(event.request, response.clone()).then(() => {
             return response;
           });

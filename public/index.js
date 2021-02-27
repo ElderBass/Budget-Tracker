@@ -3,6 +3,7 @@ let myChart;
 
 fetch("/api/transaction")
   .then((response) => {
+    console.log("response in first fetch function ", response)
     return response.json();
   })
   .then((data) => {
@@ -136,9 +137,9 @@ function sendTransaction(isAdding) {
     })
     .catch((err) => {
       // fetch failed, so save in indexed db
-      console.log("transaction trying to execute =", transaction);
+      console.log("transaction trying to execute =", JSON.stringify(transaction));
       //need to find a way to pass _id into this bad boy
-      saveRecord(transaction);
+      saveRecord("put", transaction);
 
       // clear form
       nameEl.value = "";
@@ -175,14 +176,14 @@ function checkForIndexedDb() {
   return true;
 }
 
-function saveRecord(object) {
+function saveRecord(method, object) {
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open("budget", 1);
     let db, tx, store;
 
     request.onupgradeneeded = function (e) {
       const db = request.result;
-      db.createObjectStore("transactions", { keyPath: "_id" });
+      db.createObjectStore("transactions", { keyPath: "_id"});
     };
 
     request.onerror = function (e) {
@@ -196,11 +197,18 @@ function saveRecord(object) {
 
       db.onerror = function (e) {
         console.log("error");
-      }; //need to convert this shit
-
-      console.log("object before store.put object = ", object);
-      store.put(object);
-
+      }; //need to somehow get _id in up in herr
+      if (method === "put") {
+        console.log("object before store.put object = ", object);
+        store.put(object);
+      }
+      if (method === "get") {
+        const all = store.getAll();
+        all.onsuccess = function() {
+          resolve(all.result);
+        };
+      }
+      
       tx.oncomplete = function () {
         db.close();
       };
@@ -210,9 +218,12 @@ function saveRecord(object) {
 
 function loadPage() {
   if (checkForIndexedDb()) {
-    saveRecord().then((results) => {
+    saveRecord("get").then((results) => {
       console.log("results in load page function = ", results);
-      renderArticles(results);
+      //renderArticles(results);
+      populateTotal();
+      populateTable();
+      populateChart();
     });
   }
 }
