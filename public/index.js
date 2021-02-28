@@ -3,7 +3,7 @@ let myChart;
 
 fetch("/api/transaction")
   .then((response) => {
-    console.log("response in first fetch function ", response)
+    console.log("response in first fetch function ", response);
     return response.json();
   })
   .then((data) => {
@@ -99,7 +99,7 @@ function sendTransaction(isAdding) {
     name: nameEl.value,
     value: amountEl.value,
     date: new Date().toISOString(),
-    _id: Date.now()
+    _id: Date.now(),
   };
 
   // if subtracting funds, convert amount to negative number
@@ -108,9 +108,9 @@ function sendTransaction(isAdding) {
   }
 
   // add to beginning of current array of data
-  
+
   transactions.unshift(transaction);
-  console.log("transactions array after adding custom id = ", transactions)
+  console.log("transactions array after adding custom id = ", transactions);
 
   // re-run logic to populate ui with new record
   populateChart();
@@ -140,9 +140,14 @@ function sendTransaction(isAdding) {
     })
     .catch((err) => {
       // fetch failed, so save in indexed db
-      console.log("transaction trying to execute =", JSON.stringify(transaction));
+      console.log(
+        "transaction trying to execute =",
+        JSON.stringify(transaction)
+      );
       //need to find a way to pass _id into this bad boy
       saveRecord("put", transaction);
+
+      //run populate functions
 
       // clear form
       nameEl.value = "";
@@ -186,7 +191,7 @@ function saveRecord(method, object) {
 
     request.onupgradeneeded = function (e) {
       const db = request.result;
-      db.createObjectStore("transactions", { keyPath: "_id"});
+      db.createObjectStore("transactions", { keyPath: "_id" });
     };
 
     request.onerror = function (e) {
@@ -207,11 +212,11 @@ function saveRecord(method, object) {
       }
       if (method === "get") {
         const all = store.getAll();
-        all.onsuccess = function() {
+        all.onsuccess = function () {
           resolve(all.result);
         };
       }
-      
+
       tx.oncomplete = function () {
         db.close();
       };
@@ -223,8 +228,11 @@ function loadPage() {
   if (checkForIndexedDb()) {
     saveRecord("get").then((results) => {
       console.log("results in load page function = ", results);
-      //renderArticles(results);
-      transactions.unshift(...results);
+
+      for (let i = 0; i < results.length; i++) {
+        transactions.unshift(results[i]);
+      }
+
       fetch("/api/transaction/bulk", {
         method: "POST",
         body: JSON.stringify(results),
@@ -232,14 +240,39 @@ function loadPage() {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",
         },
-      }).then(data => {
+      }).then((data) => {
+        //empty indexedDB here?
         populateTotal();
         populateTable();
         populateChart();
-      })
 
+        clearIndexedDB();
+      });
     });
   }
 }
 
 loadPage();
+
+function clearIndexedDB() {
+  var DBOpenRequest = window.indexedDB.open("budget", 1);
+
+  DBOpenRequest.onsuccess = function (event) {
+    db = DBOpenRequest.result;
+    
+  // open a read/write db transaction, ready for clearing the data
+  var transaction = db.transaction("transactions", "readwrite");
+  var objStore = transaction.objectStore("transactions");
+
+
+
+  // Make a request to clear all the data out of the object store
+  var objectStoreRequest = objStore.clear();
+
+  objectStoreRequest.onsuccess = function (event) {
+    // report the success of our request
+    console.log("IndexedDB successfully cleared.");
+  };
+  };
+
+}

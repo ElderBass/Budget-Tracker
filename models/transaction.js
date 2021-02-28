@@ -16,6 +16,9 @@ const transactionSchema = new Schema(
     date: {
       type: Date,
       default: Date.now
+    },
+    _id: {
+      type: Number,
     }
   }
 );
