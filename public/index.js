@@ -99,6 +99,7 @@ function sendTransaction(isAdding) {
     name: nameEl.value,
     value: amountEl.value,
     date: new Date().toISOString(),
+    _id: Date.now()
   };
 
   // if subtracting funds, convert amount to negative number
@@ -107,7 +108,9 @@ function sendTransaction(isAdding) {
   }
 
   // add to beginning of current array of data
+  
   transactions.unshift(transaction);
+  console.log("transactions array after adding custom id = ", transactions)
 
   // re-run logic to populate ui with new record
   populateChart();
@@ -221,9 +224,20 @@ function loadPage() {
     saveRecord("get").then((results) => {
       console.log("results in load page function = ", results);
       //renderArticles(results);
-      populateTotal();
-      populateTable();
-      populateChart();
+      transactions.unshift(...results);
+      fetch("/api/transaction/bulk", {
+        method: "POST",
+        body: JSON.stringify(results),
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+      }).then(data => {
+        populateTotal();
+        populateTable();
+        populateChart();
+      })
+
     });
   }
 }
