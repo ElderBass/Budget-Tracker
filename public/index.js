@@ -147,7 +147,6 @@ function sendTransaction(isAdding) {
       //need to find a way to pass _id into this bad boy
       saveRecord("put", transaction);
 
-      //run populate functions
 
       // clear form
       nameEl.value = "";
@@ -205,10 +204,15 @@ function saveRecord(method, object) {
 
       db.onerror = function (e) {
         console.log("error");
-      }; //need to somehow get _id in up in herr
+      }; 
       if (method === "put") {
         console.log("object before store.put object = ", object);
         store.put(object);
+              //run populate functions
+      //transactions.unshift(object);
+      populateTotal();
+      populateTable();
+      populateChart();
       }
       if (method === "get") {
         const all = store.getAll();
