@@ -208,8 +208,7 @@ function saveRecord(method, object) {
       if (method === "put") {
         console.log("object before store.put object = ", object);
         store.put(object);
-              //run populate functions
-      //transactions.unshift(object);
+
       populateTotal();
       populateTable();
       populateChart();
@@ -237,6 +236,10 @@ function loadPage() {
         transactions.unshift(results[i]);
       }
 
+      populateTotal();
+      populateTable();
+      populateChart();
+
       fetch("/api/transaction/bulk", {
         method: "POST",
         body: JSON.stringify(results),
@@ -245,10 +248,10 @@ function loadPage() {
           "Content-Type": "application/json",
         },
       }).then((data) => {
-        //empty indexedDB here?
-        populateTotal();
-        populateTable();
-        populateChart();
+        console.log("am i in here orwut?", data);
+        // populateTotal();
+        // populateTable();
+        // populateChart();
 
         clearIndexedDB();
       });
