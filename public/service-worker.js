@@ -17,7 +17,6 @@ self.addEventListener("install", (event) => {
     caches
       .open(STATIC_CACHE)
       .then((cache) => {
-        console.log("cache in install event service-worker = ", cache)
         cache.addAll(FILES_TO_CACHE);
         console.log(cache);
       })
@@ -28,7 +27,6 @@ self.addEventListener("install", (event) => {
 // The activate handler takes care of cleaning up old caches.
 self.addEventListener("activate", (event) => {
   const currentCaches = [STATIC_CACHE, RUNTIME_CACHE];
-  console.log("are we even doing this at all?")
   event.waitUntil(
     caches
       .keys()
@@ -50,14 +48,6 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  // if (
-  //   event.request.method !== "GET" ||
-  //   !event.request.url.startsWith(self.location.origin)
-  // ) {
-  //   console.log("just in case we're hitting this but I don't think we are = ", event.request)
-  //   event.respondWith(fetch(event.request));
-  //   return;
-  // }
 
   // handle runtime GET requests for data from /api routes
   if (event.request.url.includes("/api/transaction")) {

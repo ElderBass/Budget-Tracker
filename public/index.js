@@ -108,9 +108,7 @@ function sendTransaction(isAdding) {
   }
 
   // add to beginning of current array of data
-
   transactions.unshift(transaction);
-  console.log("transactions array after adding custom id = ", transactions);
 
   // re-run logic to populate ui with new record
   populateChart();
@@ -140,11 +138,6 @@ function sendTransaction(isAdding) {
     })
     .catch((err) => {
       // fetch failed, so save in indexed db
-      console.log(
-        "transaction trying to execute =",
-        JSON.stringify(transaction)
-      );
-      //need to find a way to pass _id into this bad boy
       saveRecord("put", transaction);
 
 
@@ -182,7 +175,7 @@ function checkForIndexedDb() {
   }
   return true;
 }
-
+//this function will save any transactions that occur offline into IndexedDB, then re-render the charts on screen with the passed-in data
 function saveRecord(method, object) {
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open("budget", 1);
@@ -206,7 +199,7 @@ function saveRecord(method, object) {
         console.log("error");
       }; 
       if (method === "put") {
-        console.log("object before store.put object = ", object);
+        
         store.put(object);
 
       populateTotal();
@@ -226,11 +219,11 @@ function saveRecord(method, object) {
     };
   });
 }
-
+//on load, we'll want to check if we have any data in IndexedDb
+//if we do, we'll retrieve it and push it to the fron of the global "transactions" array, then rerender the charts
 function loadPage() {
   if (checkForIndexedDb()) {
     saveRecord("get").then((results) => {
-      console.log("results in load page function = ", results);
 
       for (let i = 0; i < results.length; i++) {
         transactions.unshift(results[i]);
@@ -248,11 +241,7 @@ function loadPage() {
           "Content-Type": "application/json",
         },
       }).then((data) => {
-        console.log("am i in here orwut?", data);
-        // populateTotal();
-        // populateTable();
-        // populateChart();
-
+        //once we've succesfully transferred the data from IndexedDB into our Mongo DB, we can empty out the IndexedDB.
         clearIndexedDB();
       });
     });
@@ -261,6 +250,7 @@ function loadPage() {
 
 loadPage();
 
+//this function empties the IndexedDB once we're done with it.
 function clearIndexedDB() {
   var DBOpenRequest = window.indexedDB.open("budget", 1);
 
@@ -270,8 +260,6 @@ function clearIndexedDB() {
   // open a read/write db transaction, ready for clearing the data
   var transaction = db.transaction("transactions", "readwrite");
   var objStore = transaction.objectStore("transactions");
-
-
 
   // Make a request to clear all the data out of the object store
   var objectStoreRequest = objStore.clear();

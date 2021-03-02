@@ -5,16 +5,16 @@ An app for managing your transactions offline or online, by Seth Zygarlicke
 ### Links
 
 * Github Repository: [https://github.com/ElderBass/Budget-Tracker.git](https://github.com/ElderBass/Budget-Tracker.git)
-* Heroku Deployed: [https://agile-brushlands-36883.herokuapp.com/](https://agile-brushlands-36883.herokuapp.com/)
+* Heroku Deployed: [https://whispering-depths-82087.herokuapp.com/](https://whispering-depths-82087.herokuapp.com/)
 
 ## Table of Contents
 
 
 * [Description](#description)
-    
-* [Installation](#installation)
 
 * [Technologies](#technologies)
+    
+* [Installation](#installation)
     
 * [Contributing](#contributing)
     
@@ -22,26 +22,24 @@ An app for managing your transactions offline or online, by Seth Zygarlicke
 
 ## Description
 
-Fitness Tracker is a node/express application for creating, customizing, logging, and tracking your workouts. 
+Budget Tracker is a node/express application for managing your budget by catalouging your transactions, whether offline or online. 
 
-The user opens the application and starts a new workout. From there, they are led to a form for filling out details on the nature of their exercise. First, they choose either a 'resistance' or 'cardio' exercise. Depending on what they choose, the form's fields will change accordingly. 
+The user opens the application and is directed to their home page. This page displays a table of the user's previous transactions (which might be empty upon initial startup) as well as a graph showing the transactions over time.
 
-For 'resistance' exercises, they must enter the name of the workout, the weight at which they will perform the workout, the number of sets and reps they will do, and duration of the exercise. 
+The user can document their transactions by simply filling out the form at the top. Enter the name of the transaction, the amount of money involved, and hit the corresponding button if it was subtracting or adding to your total funds. 
 
-Similarly, for cardio, the user enters the name of the exercise, the number of miles they will travel, and the duration of the exercise.
+Upon entering a transaction, the table and chart will automatically update with date from the latest transaction. The beauty of this application is that it works both online and offline. 
 
-On the final exercise the user plans on entering - and this is key - the user must hit the COMPLETE button. This will log the final exercise into the workout and return the user to the 'home' page. On the home page will now be displayed stats for the workout just logged. The user can now click 'Continue Workout' to add more exercises to the current workout, or they can create a fresh workout and add exercises to it.
-
-The user can check statistics on all the past seven workouts logged by clicking on the 'Dashboard' link in the navigation bar. This navigates the user to page displaying two charts, one for total duration of the past seven workouts, the other showing total weight lifted per workout. Both of these data will have a color-coded pie chart beneath them for a different visual representation of their data.
+Going offline, the application will work just as if the user was online. Thus, if flying for work, in a tunnel on the subway, or out in the middle of nowhere, you'll be able to update your budget regardless of location or wi-fi status. 
 
 ### Demonstration
 
-![Fitness Tracker Demonstration](public/demo/fitness-tracker.gif)
+![Budget Tracker Demonstration](demo/budget-tracker.gif)
 
 
 ## Technologies
 
-Fitness tracker is a node.js application that uses the express npm package to establish a connection to servers and develop routes between the client and server. Another critical dependency is the mongoose npm package, which allows the application to connect to the application's database stored in Mongo. 
+Budget tracker is a node.js application that uses the express npm package to establish a connection to servers and develop routes between the client and server. Another critical dependency is the mongoose npm package, which allows the application to connect to the application's database stored in Mongo. 
 
 One other package used in this application was nodemon, which allowed us to restart and render our application in real time after changes and saves.
 
