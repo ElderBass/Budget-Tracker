@@ -5,7 +5,7 @@ An app for managing your transactions offline or online, by Seth Zygarlicke
 ### Links
 
 * Github Repository: [https://github.com/ElderBass/Budget-Tracker.git](https://github.com/ElderBass/Budget-Tracker.git)
-* Heroku Deployed: [https://serene-ocean-84827.herokuapp.com/](https://serene-ocean-84827.herokuapp.com/)
+* Heroku Deployed: [https://agile-brushlands-36883.herokuapp.com/](https://agile-brushlands-36883.herokuapp.com/)
 
 ## Table of Contents
 
