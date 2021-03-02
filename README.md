@@ -1,70 +1,68 @@
-# Unit 18 PWA Homework: Online/Offline Budget Trackers
+# Budget Tracker
 
-Add functionality to our existing Budget Tracker application to allow for offline access and functionality.
+An app for managing your transactions offline or online, by Seth Zygarlicke
 
-The user will be able to add expenses and deposits to their budget with or without a connection. When entering transactions offline, they should populate the total when brought back online.
+### Links
 
-Offline Functionality:
+* Github Repository: [https://github.com/ElderBass/Budget-Tracker.git](https://github.com/ElderBass/Budget-Tracker.git)
+* Heroku Deployed: [https://serene-ocean-84827.herokuapp.com/](https://serene-ocean-84827.herokuapp.com/)
 
-  * Enter deposits offline
-
-  * Enter expenses offline
-
-When brought back online:
-
-  * Offline entries should be added to tracker.
-
-## User Story
-AS AN avid traveller
-I WANT to be able to track my withdrawals and deposits with or without a data/internet connection
-SO THAT my account balance is accurate when I am traveling
-
-## Business Context
-
-Giving users a fast and easy way to track their money is important, but allowing them to access that information anytime is even more important. Having offline functionality is paramount to our applications success.
+## Table of Contents
 
 
-## Acceptance Criteria
-GIVEN a user is on Budget App without an internet connection
-WHEN the user inputs a withdrawal or deposit
-THEN that will be shown on the page, and added to their transaction history when their connection is back online.
+* [Description](#description)
+    
+* [Installation](#installation)
 
-- - -
+* [Technologies](#technologies)
+    
+* [Contributing](#contributing)
+    
+* [Questions](#questions)
 
-## Commit Early and Often
+## Description
 
-* One of the most important skills to master as a web developer is version control. Building the habit of committing via Git is important for two reasons:
+Fitness Tracker is a node/express application for creating, customizing, logging, and tracking your workouts. 
 
-1. Your commit history is a signal to employers that you are actively working on projects and learning new skills
+The user opens the application and starts a new workout. From there, they are led to a form for filling out details on the nature of their exercise. First, they choose either a 'resistance' or 'cardio' exercise. Depending on what they choose, the form's fields will change accordingly. 
 
-2. Your commit history allows you to revert your code base in the event that you need to return to a previous state
+For 'resistance' exercises, they must enter the name of the workout, the weight at which they will perform the workout, the number of sets and reps they will do, and duration of the exercise. 
 
-* Follow these guidelines for committing:
+Similarly, for cardio, the user enters the name of the exercise, the number of miles they will travel, and the duration of the exercise.
 
-  * Make single purpose commits for related changes to ensure a clean, manageable history. If you are fixing two issues, make two commits
+On the final exercise the user plans on entering - and this is key - the user must hit the COMPLETE button. This will log the final exercise into the workout and return the user to the 'home' page. On the home page will now be displayed stats for the workout just logged. The user can now click 'Continue Workout' to add more exercises to the current workout, or they can create a fresh workout and add exercises to it.
 
-  * Write descriptive, meaningful commit messages so that you and anyone else looking at your repository can easily understand its history
+The user can check statistics on all the past seven workouts logged by clicking on the 'Dashboard' link in the navigation bar. This navigates the user to page displaying two charts, one for total duration of the past seven workouts, the other showing total weight lifted per workout. Both of these data will have a color-coded pie chart beneath them for a different visual representation of their data.
 
-  * Don't commit half done work, for the sake of your collaborators (and your future self!)
+### Demonstration
 
-  * Test your application before you commit to ensure functionality at every step in the development process
+![Fitness Tracker Demonstration](public/demo/fitness-tracker.gif)
 
-* We would like you to have well over 200 commits by graduation, so commit early and often!
 
-* Deploy your application with [Heroku and MongoDB Atlas.](../04-Important/MongoAtlas-Deploy.md)
+## Technologies
 
-## Submission on BCS
+Fitness tracker is a node.js application that uses the express npm package to establish a connection to servers and develop routes between the client and server. Another critical dependency is the mongoose npm package, which allows the application to connect to the application's database stored in Mongo. 
 
-* You are required to submit the following:
+One other package used in this application was nodemon, which allowed us to restart and render our application in real time after changes and saves.
 
-  * the URL to the deployed application
+All of the code was written in the VS Code program.  
 
-  * the URL to the Github repository
+## Installation
 
-- - -
+To install the many dependencies this application utilizes, open the server.js file a new integrated terminal in your VS Code and run the following command:
 
-## Hint
+```
+npm i
+```
 
-* In order to cache dynamic content, i.e. users' inputs for withdrawals or deposits, incorporate `indexedDB` from the previous module.
+This will install every dependency contained within the package.json file.
 
-* Use [Google](https://www.google.com) or another search engine to research this topic.
+## Contributing
+
+If you wish to contribute to this repository, feel free to fork it to your local machine and do with it as you please.
+
+## Questions 
+
+If you have any questions or comments about this repo, email the creator Seth at [zygster11@gmail.com](zygster11@gmail.com)
+
+For more projects by Seth, visit his Github page at [https://github.com/ElderBass](https://github.com/ElderBass)
